@@ -100,7 +100,7 @@ installpacker() {
 
 cloneconfig() {
     echo "Cloning LunarVim configuration"
-    git clone --branch master https://github.com/pingu1m/LunarVim.git ~/.config/nvim
+    git clone --branch rolling https://github.com/pingu1m/LunarVim.git ~/.config/nvim
     cp $HOME/.config/nvim/utils/installer/lv-config.example-no-ts.lua $HOME/.config/nvim/lv-config.lua
     nvim --headless \
         +'autocmd User PackerComplete sleep 100m | qall' \
