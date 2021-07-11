@@ -25,12 +25,12 @@
 Make sure you have the newest version of Neovim (0.5).
 
 ``` bash
-bash <(curl -s https://raw.githubusercontent.com/ChristianChiarulli/lunarvim/master/utils/installer/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/pingu1m/lunarvim/master/utils/installer/install.sh) 
 ```
 
 If you help to develop Lunarvim, you can install a specific branch branch directly
 ``` bash
-LVBRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/ChristianChiarulli/lunarvim/master/utils/installer/install.sh)
+LVBRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/pingu1m/lunarvim/master/utils/installer/install.sh)
 ```
 
 
