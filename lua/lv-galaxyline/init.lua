@@ -5,8 +5,12 @@ local status_ok, gl = pcall(require, "galaxyline")
 if not status_ok then
   return
 end
--- get my theme in galaxyline repo
-local colors = O.plugin.galaxyline.colors
+
+-- NOTE: if someone defines colors but doesn't have them then this will break
+local palette_status_ok, colors = pcall(require, O.colorscheme .. ".palette")
+if not palette_status_ok then
+  colors = O.plugin.galaxyline.colors
+end
 
 local condition = require "galaxyline.condition"
 local gls = gl.section
@@ -41,8 +45,8 @@ table.insert(gls.left, {
       vim.api.nvim_command("hi GalaxyViMode guifg=" .. mode_color[vim.fn.mode()])
       return "▊"
     end,
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { "NONE", colors.bg },
   },
 })
 -- print(vim.fn.getbufvar(0, 'ts'))
@@ -55,8 +59,8 @@ table.insert(gls.left, {
     end,
     condition = condition.check_git_workspace,
     separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineGit",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.orange, colors.bg },
   },
 })
 
@@ -65,8 +69,8 @@ table.insert(gls.left, {
     provider = "GitBranch",
     condition = condition.check_git_workspace,
     separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.grey, colors.bg },
   },
 })
 
@@ -75,7 +79,7 @@ table.insert(gls.left, {
     provider = "DiffAdd",
     condition = condition.hide_in_width,
     icon = "  ",
-    highlight = "StatusLineGitAdd",
+    highlight = { colors.green, colors.bg },
   },
 })
 
@@ -84,7 +88,7 @@ table.insert(gls.left, {
     provider = "DiffModified",
     condition = condition.hide_in_width,
     icon = " 柳",
-    highlight = "StatusLineGitChange",
+    highlight = { colors.blue, colors.bg },
   },
 })
 
@@ -93,7 +97,7 @@ table.insert(gls.left, {
     provider = "DiffRemove",
     condition = condition.hide_in_width,
     icon = "  ",
-    highlight = "StatusLineGitDelete",
+    highlight = { colors.red, colors.bg },
   },
 })
 
@@ -102,7 +106,7 @@ table.insert(gls.left, {
     provider = function()
       return " "
     end,
-    highlight = "StatusLineGitDelete",
+    highlight = { colors.grey, colors.bg },
   },
 })
 -- get output from shell command
@@ -146,8 +150,8 @@ end
 table.insert(gls.left, {
   VirtualEnv = {
     provider = PythonEnv,
-    highlight = "StatusLineTreeSitter",
     event = "BufEnter",
+    highlight = { colors.green, colors.bg },
   },
 })
 
@@ -155,15 +159,14 @@ table.insert(gls.right, {
   DiagnosticError = {
     provider = "DiagnosticError",
     icon = "  ",
-    highlight = "StatusLineLspDiagnosticsError",
+    highlight = { colors.red, colors.bg },
   },
 })
 table.insert(gls.right, {
   DiagnosticWarn = {
     provider = "DiagnosticWarn",
     icon = "  ",
-
-    highlight = "StatusLineLspDiagnosticsWarning",
+    highlight = { colors.orange, colors.bg },
   },
 })
 
@@ -171,8 +174,7 @@ table.insert(gls.right, {
   DiagnosticInfo = {
     provider = "DiagnosticInfo",
     icon = "  ",
-
-    highlight = "StatusLineLspDiagnosticsInformation",
+    highlight = { colors.yellow, colors.bg },
   },
 })
 
@@ -180,8 +182,7 @@ table.insert(gls.right, {
   DiagnosticHint = {
     provider = "DiagnosticHint",
     icon = "  ",
-
-    highlight = "StatusLineLspDiagnosticsHint",
+    highlight = { colors.blue, colors.bg },
   },
 })
 
@@ -194,8 +195,8 @@ table.insert(gls.right, {
       return ""
     end,
     separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineTreeSitter",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.green, colors.bg },
   },
 })
 
@@ -238,7 +239,7 @@ table.insert(gls.right, {
       return true
     end,
     icon = " ",
-    highlight = "StatusLineNC",
+    highlight = { colors.grey, colors.bg },
   },
 })
 
@@ -246,8 +247,8 @@ table.insert(gls.right, {
   LineInfo = {
     provider = "LineColumn",
     separator = "  ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.grey, colors.bg },
   },
 })
 
@@ -255,8 +256,8 @@ table.insert(gls.right, {
   PerCent = {
     provider = "LinePercent",
     separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.grey, colors.bg },
   },
 })
 
@@ -267,8 +268,8 @@ table.insert(gls.right, {
     end,
     condition = condition.hide_in_width,
     separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.grey, colors.bg },
   },
 })
 
@@ -277,8 +278,8 @@ table.insert(gls.right, {
     provider = "FileTypeName",
     condition = condition.hide_in_width,
     separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.grey, colors.bg },
   },
 })
 
@@ -287,8 +288,8 @@ table.insert(gls.right, {
     provider = "FileEncode",
     condition = condition.hide_in_width,
     separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.grey, colors.bg },
   },
 })
 
@@ -298,8 +299,8 @@ table.insert(gls.right, {
       return " "
     end,
     separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.grey, colors.bg },
   },
 })
 
@@ -307,8 +308,8 @@ table.insert(gls.short_line_left, {
   BufferType = {
     provider = "FileTypeName",
     separator = " ",
-    separator_highlight = "StatusLineSeparator",
-    highlight = "StatusLineNC",
+    separator_highlight = { "NONE", colors.bg },
+    highlight = { colors.grey, colors.bg },
   },
 })
 
@@ -316,8 +317,7 @@ table.insert(gls.short_line_left, {
   SFileName = {
     provider = "SFileName",
     condition = condition.buffer_not_empty,
-
-    highlight = "StatusLineNC",
+    highlight = { colors.grey, colors.bg },
   },
 })
 

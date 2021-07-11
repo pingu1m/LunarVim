@@ -7,6 +7,7 @@ USER = vim.fn.expand "$USER"
 O = {
   leader_key = "space",
   colorscheme = "spacegray",
+  line_wrap_cursor_movement = true,
   transparent_window = false,
   format_on_save = true,
   vnsip_dir = vim.fn.stdpath "config" .. "/snippets",
@@ -54,7 +55,7 @@ O = {
     scrolloff = 8, -- is one of my fav
   },
 
-  -- TODO refactor for tree
+  -- TODO: refactor for tree
   auto_close_tree = 0,
   nvim_tree_disable_netrw = 0,
 
@@ -76,7 +77,7 @@ O = {
     lush = { active = false },
   },
 
-  -- TODO just using mappings (leader mappings)
+  -- TODO: just using mappings (leader mappings)
   user_which_key = {},
 
   user_plugins = {
@@ -157,7 +158,7 @@ O = {
       },
       formatter = {
         exe = "stylua",
-        args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0) },
+        args = {},
         stdin = false,
       },
     },
@@ -183,6 +184,7 @@ O = {
       },
     },
     python = {
+      -- @usage can be flake8 or yapf
       linter = "",
       isort = false,
       diagnostics = {
@@ -218,6 +220,7 @@ O = {
         parameter_hints_prefix = "<-",
         other_hints_prefix = "=>", -- prefix for all the other hints (type, chaining)
       },
+      -- @usage can be clippy
       formatter = {
         exe = "rustfmt",
         args = { "--emit=stdout" },
@@ -258,12 +261,13 @@ O = {
       },
       formatter = {
         exe = "prettier",
-        args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote" },
+        args = { "--write", "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote" },
+        stdin = false,
       },
     },
     terraform = {},
     tsserver = {
-      -- @usage can be 'eslint'
+      -- @usage can be 'eslint' or 'eslint_d'
       linter = "",
       diagnostics = {
         virtual_text = { spacing = 0, prefix = "" },
@@ -272,7 +276,8 @@ O = {
       },
       formatter = {
         exe = "prettier",
-        args = { "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote" },
+        args = { "--write", "--stdin-filepath", vim.api.nvim_buf_get_name(0), "--single-quote" },
+        stdin = false,
       },
     },
     vim = {},
